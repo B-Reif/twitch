@@ -1,8 +1,9 @@
 module Twitch
   module Adapters
     class BaseAdapter
-      def self.get(url)
-        request(:get, url)
+
+      def self.get(url, options)
+        request(:get, url, options)
       end
 
       def self.post(url, options)

@@ -48,11 +48,11 @@ module Twitch
 
     # User
 
-    def user(user = nil)
-      return your_user unless user
+    def user(user_id = nil)
+      return your_user unless user_id
 
       path = "/users/"
-      url = @base_url + path + user;
+      url = @base_url + path + user_id;
 
       get(url)
     end

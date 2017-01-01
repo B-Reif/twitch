@@ -1,5 +1,11 @@
 module Twitch
   module Request
+
+    def required_headers
+      {'Client-ID' => @client_id,
+      'Accept' => 'application/vnd.twitchtv.v5+json'}
+    end
+
     def build_query_string(options)
       query = "?"
       options.each do |key, value|
@@ -8,8 +14,10 @@ module Twitch
       query = query[0...-1]
     end
 
-    def get(url)
-      @adapter.get(url)
+    def get(url, data={})
+      data[:headers] = data[:headers] || {}
+      data[:headers].merge!(required_headers)
+      @adapter.get(url, data)
     end
 
     def post(url, data)
@@ -20,10 +28,9 @@ module Twitch
       @adapter.put(url, :body => data, :headers => {
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
-          'Api-Version' => '2.2'
       })
     end
-    
+
     def delete(url)
       @adapter.delete(url)
     end
